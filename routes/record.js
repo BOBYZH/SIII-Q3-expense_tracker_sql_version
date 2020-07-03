@@ -1,15 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const Record = require('../models/record')
+const db = require('../models')
+const Record = db.Record
 
 const { authenticated } = require('../config/auth')
 
-router.get('/', authenticated, (req, res) => {
-  return res.send('List all record')
-})
-
-router.get('/new', authenticated, (req, res) => {
-  // adept Adam Beer's JS code from: https://teamtreehouse.com/community/html-input-date-field-how-to-set-default-value-to-todays-date
+function getSimpleDate () {
+  // Adept from Adam Beer's JS code: https://teamtreehouse.com/community/html-input-date-field-how-to-set-default-value-to-todays-date
   let date = new Date()
   let dd = date.getDate()
   let mm = date.getMonth() + 1 // January is 0!
@@ -21,68 +18,61 @@ router.get('/new', authenticated, (req, res) => {
     mm = '0' + mm
   }
   date = yyyy + '-' + mm + '-' + dd
-  //  console.log(date)
-  return res.render('new', { date })
+  return date
+}
+
+router.get('/new', authenticated, (req, res) => {
+  const date = getSimpleDate()
+  return res.render('new', JSON.parse(JSON.stringify({ date })))
 })
 
 router.post('/', authenticated, (req, res) => {
-  const record = new Record({
+  const record = {
     name: req.body.name,
     category: req.body.category,
     date: req.body.date,
     month: req.body.date.substring(5, 7),
     amount: req.body.amount,
     merchant: req.body.merchant,
-    userId: req.user._id
-  })
-  record.save(err => {
-    if (err) return console.error(err)
+    userId: req.user.id
+  }
+  Record.create(record).then(() => {
     return res.redirect('/')
-  })
+  }).catch((error) => { return res.status(422).json(error) })
 })
 
 router.get('/:id/edit', authenticated, (req, res) => {
-  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
-    let date = new Date()
-    let dd = date.getDate()
-    let mm = date.getMonth() + 1 // January is 0!
-    const yyyy = date.getFullYear()
-    if (dd < 10) {
-      dd = '0' + dd
-    }
-    if (mm < 10) {
-      mm = '0' + mm
-    }
-    date = yyyy + '-' + mm + '-' + dd
-    if (err) return console.error(err)
-    return res.render('edit', { record, date })
-  })
+  Record.findOne({ where: { id: req.params.id, userId: req.user.id } })
+    .then((record) => {
+      const date = getSimpleDate()
+      return res.render('edit', JSON.parse(JSON.stringify({ record, date })))
+    })
+    .catch((error) => { return res.status(422).json(error) })
 })
 
 router.put('/:id', authenticated, (req, res) => {
-  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
-    if (err) return console.error(err)
-    record.name = req.body.name
-    record.category = req.body.category
-    record.date = req.body.date
-    record.month = req.body.date.substring(5, 7)
-    record.amount = req.body.amount
-    record.merchant = req.body.merchant
-    record.save(err => {
-      if (err) return console.error(err)
-      return res.redirect('/')
+  Record.findOne({ where: { id: req.params.id, userId: req.user.id } })
+    .then((record) => {
+      record.update({
+        name: req.body.name,
+        category: req.body.category,
+        date: req.body.date,
+        month: req.body.date.substring(5, 7),
+        amount: req.body.amount,
+        merchant: req.body.merchant
+      }).then(() => {
+        return res.redirect('/')
+      }).catch((error) => { return res.status(422).json(error) })
     })
-  })
 })
 
 router.delete('/:id', authenticated, (req, res) => {
-  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
-    if (err) return console.error(err)
-    record.remove(err => {
-      if (err) return console.error(err)
-      return res.redirect('/')
+  Record.findOne({ where: { id: req.params.id, userId: req.user.id } })
+    .then((record) => {
+      record.destroy().then(() => {
+        return res.redirect('/')
+      }).catch((error) => { return res.status(422).json(error) })
     })
-  })
 })
 
 module.exports = router
