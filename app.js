@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const app = express()
-const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const session = require('express-session')
@@ -41,22 +40,6 @@ app.use((req, res, next) => {
   next()
 })
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/record', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-})
-
-const db = mongoose.connection // 已連線的資料庫
-
-db.on('error', () => { // on可觸發多次
-  console.log('mongodb error!')
-})
-
-db.once('open', () => { // once只觸發一次
-  console.log('mongodb connected!')
-})
-
 app.use('/', require('./routes/home'))
 app.use('/records', require('./routes/record'))
 app.use('/users', require('./routes/user'))
@@ -64,4 +47,5 @@ app.use('/auth', require('./routes/auths'))
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('App is listening!')
+  console.log('Enter http://localhost:3000/ if you run this app on your local computer.')
 })
