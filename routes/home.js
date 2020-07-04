@@ -16,19 +16,44 @@ router.get('/', authenticated, (req, res) => {
 router.get('/filter', authenticated, (req, res) => {
   const category = req.query.category
   const month = req.query.month
-  console.log(category, month)
-  let querys = {}
-  if (month === '') {
-    querys = { category: category, userId: req.user.id }
-  } else if (category === '') {
-    querys = { month: month, userId: req.user.id }
+  const year = req.query.year
+  console.log(category, month, year)
+  if (year === '' && month === '' && category === '') {
+    return res.redirect('/')
   } else {
-    querys = { category: category, month: month, userId: req.user.id }
+    let querys = {}
+    if (category === '') {
+      if (month === '') {
+        querys = { year: year, userId: req.user.id }
+      } else if (year === '') {
+        querys = { month: month, userId: req.user.id }
+      } else {
+        querys = { year: year, month: month, userId: req.user.id }
+      }
+    } else if (month === '') {
+      if (category === '') {
+        querys = { year: year, userId: req.user.id }
+      } else if (year === '') {
+        querys = { category: category, userId: req.user.id }
+      } else {
+        querys = { category: category, year: year, userId: req.user.id }
+      }
+    } else if (year === '') {
+      if (category === '') {
+        querys = { month: month, userId: req.user.id }
+      } else if (month === '') {
+        querys = { category: category, userId: req.user.id }
+      } else {
+        querys = { category: category, month: month, userId: req.user.id }
+      }
+    } else {
+      querys = { category: category, year: year, month: month, userId: req.user.id }
+    }
+    Record.findAll({ where: querys, order: [['date', 'DESC']] })
+      .then((records) => {
+        return res.render('index', JSON.parse(JSON.stringify({ records, month, year, category })))
+      })
+      .catch(() => { return res.sendStatus(500) })
   }
-  Record.findAll({ where: querys, order: [['date', 'DESC']] })
-    .then((records) => {
-      return res.render('index', JSON.parse(JSON.stringify({ records, month, category })))
-    })
-    .catch(() => { return res.sendStatus(500) })
 })
 module.exports = router

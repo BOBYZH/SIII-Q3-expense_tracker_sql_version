@@ -1,46 +1,56 @@
 <div class="container">
-  <div class="d-block w-75 mx-auto mb-4">
-    <select class="form-control mx-auto p-1 d-inline-block w-50" onchange="window.location.href=this.value;">
+  <div class="d-flex mx-auto mb-4">
+    <form action="/filter" method="GET" class="ml-5 d-flex justify-content-between form-control">
+      <input type="number" name="year" placeholder="年份" class="border-0" required value={{year}}>
+      <input type="text" class="d-none" {{#if month}} value={{month}} {{/if}}name="month">
+      <input type="text" class="d-none" {{#if category}} value={{category}} {{/if}}name="category">
+      <input type="submit" class="bg-white border-0">
+    </form>
+    <select class="form-control mx-3 p-1 d-inline-block" onchange="window.location.href=this.value;">
       <option disabled selected value>月份</option>
-      <option value="/filter?month=01&category={{category}}" {{#ifCond month "01"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=&category={{category}}" {{#ifCond month ""}} selected {{/ifCond}}>
+        不限</option>
+      <option value="/filter?year={{year}}&month=01&category={{category}}" {{#ifCond month "01"}} selected {{/ifCond}}>
         一月</option>
-      <option value="/filter?month=02&category={{category}}" {{#ifCond month "02"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=02&category={{category}}" {{#ifCond month "02"}} selected {{/ifCond}}>
         二月</option>
-      <option value="/filter?month=03&category={{category}}" {{#ifCond month "03"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=03&category={{category}}" {{#ifCond month "03"}} selected {{/ifCond}}>
         三月</option>
-      <option value="/filter?month=04&category={{category}}" {{#ifCond month "04"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=04&category={{category}}" {{#ifCond month "04"}} selected {{/ifCond}}>
         四月</option>
-      <option value="/filter?month=05&category={{category}}" {{#ifCond month "05"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=05&category={{category}}" {{#ifCond month "05"}} selected {{/ifCond}}>
         五月</option>
-      <option value="/filter?month=06&category={{category}}" {{#ifCond month "06"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=06&category={{category}}" {{#ifCond month "06"}} selected {{/ifCond}}>
         六月</option>
-      <option value="/filter?month=07&category={{category}}" {{#ifCond month "07"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=07&category={{category}}" {{#ifCond month "07"}} selected {{/ifCond}}>
         七月</option>
-      <option value="/filter?month=08&category={{category}}" {{#ifCond month "08"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=08&category={{category}}" {{#ifCond month "08"}} selected {{/ifCond}}>
         八月</option>
-      <option value="/filter?month=09&category={{category}}" {{#ifCond month "09"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=09&category={{category}}" {{#ifCond month "09"}} selected {{/ifCond}}>
         九月</option>
-      <option value="/filter?month=10&category={{category}}" {{#ifCond month "10"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=10&category={{category}}" {{#ifCond month "10"}} selected {{/ifCond}}>
         十月</option>
-      <option value="/filter?month=11&category={{category}}" {{#ifCond month "11"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=11&category={{category}}" {{#ifCond month "11"}} selected {{/ifCond}}>
         十一月</option>
-      <option value="/filter?month=12&category={{category}}" {{#ifCond month "12"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month=12&category={{category}}" {{#ifCond month "12"}} selected {{/ifCond}}>
         十二月</option>
     </select>
 
-    <select class="form-control mx-auto p-1 float-right" onchange="window.location.href=this.value;"
-      style="display: inline-block; width: 49%;">
+    <select class="form-control ml-1 p-1 float-right d-inline-block" onchange="window.location.href=this.value;">
       <option disabled selected value="/">類別</option>
-      <option value="/filter?month={{month}}&category=domestic" {{#ifCond category "domestic"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month={{month}}&category=" {{#ifCond category ""}} selected
+        {{/ifCond}}>
+        不限</option>
+      <option value="/filter?year={{year}}&month={{month}}&category=domestic" {{#ifCond category "domestic"}} selected {{/ifCond}}>
         家居物業</option>
-      <option value="/filter?month={{month}}&category=traffic" {{#ifCond category "traffic"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month={{month}}&category=traffic" {{#ifCond category "traffic"}} selected {{/ifCond}}>
         交通出行</option>
-      <option value="/filter?month={{month}}&category=recreation" {{#ifCond category "recreation"}} selected
+      <option value="/filter?year={{year}}&month={{month}}&category=recreation" {{#ifCond category "recreation"}} selected
         {{/ifCond}}>
         休閒娛樂</option>
-      <option value="/filter?month={{month}}&category=diet" {{#ifCond category "diet"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month={{month}}&category=diet" {{#ifCond category "diet"}} selected {{/ifCond}}>
         餐飲食品</option>
-      <option value="/filter?month={{month}}&category=others" {{#ifCond category "others"}} selected {{/ifCond}}>
+      <option value="/filter?year={{year}}&month={{month}}&category=others" {{#ifCond category "others"}} selected {{/ifCond}}>
         其他</option>
     </select>
   </div>
@@ -48,6 +58,7 @@
   <div id="total-amount" class="text-right w-75 mx-auto" style="color: coral; font-size: 70px;">0</div>
 </div>
 <div class="list-group container">
+  {{#if records}}
   <table class="table table-striped table-borderless mx-5">
     <tbody>
       {{#each records}}
@@ -59,7 +70,7 @@
           <div class="item">
             <h5 class="name">{{this.name}}</h5>
             <small class="date">{{this.date}}</small>
-          </div>            
+          </div>
         </td>
         <td class="align-middle px-5">{{this.merchant}}</td>
         <td class="align-middle amount px-5">{{this.amount}}</td>
@@ -74,6 +85,9 @@
       {{/each}}
     </tbody>
   </table>
+  {{else}}
+  <h3 class="text-center my-5">無符合條件的帳目。</h3>
+  {{/if}}
   <div class="w-75 mx-auto">
     <a href="/" class="btn btn-outline-dark text-white w-25 d-inline-block float-right"
       style="background-color: grey;">顯示所有項目</a>
