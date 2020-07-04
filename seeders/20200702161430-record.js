@@ -49,7 +49,7 @@ module.exports = {
       name: '高鐵從左營到台北',
       category: 'traffic',
       date: '2019-04-30',
-      month: '4',
+      month: '04',
       amount: 1445,
       createdAt: new Date(),
       updatedAt: new Date(),
