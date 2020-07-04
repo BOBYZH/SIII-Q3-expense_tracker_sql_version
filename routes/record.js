@@ -32,6 +32,7 @@ router.post('/', authenticated, (req, res) => {
     category: req.body.category,
     date: req.body.date,
     month: req.body.date.substring(5, 7),
+    year: req.body.date.substring(0, 4),
     amount: req.body.amount,
     merchant: req.body.merchant,
     userId: req.user.id
@@ -58,6 +59,7 @@ router.put('/:id', authenticated, (req, res) => {
         category: req.body.category,
         date: req.body.date,
         month: req.body.date.substring(5, 7),
+        year: req.body.date.substring(0, 4),
         amount: req.body.amount,
         merchant: req.body.merchant
       }).then(() => {

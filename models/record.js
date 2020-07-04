@@ -27,6 +27,13 @@ module.exports = (sequelize, DataTypes) => {
         isDate: true
       }
     },
+    year: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isDate: true
+      }
+    },
     amount: {
       type: DataTypes.INTEGER,
       allowNull: false,
