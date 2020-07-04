@@ -23,7 +23,7 @@ function getSimpleDate () {
 
 router.get('/new', authenticated, (req, res) => {
   const date = getSimpleDate()
-  return res.render('new', JSON.parse(JSON.stringify({ date })))
+  return res.render('edit', JSON.parse(JSON.stringify({ date })))
 })
 
 router.post('/', authenticated, (req, res) => {

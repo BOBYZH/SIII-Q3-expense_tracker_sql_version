@@ -1,54 +1,72 @@
-<div class="selects">
-  <div class="selects w-75 mx-auto" style="display: block;">
-    <select class="mx-auto p-1" onchange="window.location.href=this.value;" style="display: inline-block; width: 49%;">
+<div class="container">
+  <div class="d-block w-75 mx-auto mb-4">
+    <select class="form-control mx-auto p-1 d-inline-block w-50" onchange="window.location.href=this.value;">
       <option disabled selected value>月份</option>
-      <option value="/filter?month=01&category={{category}}">一月</option>
-      <option value="/filter?month=02&category={{category}}">二月</option>
-      <option value="/filter?month=03&category={{category}}">三月</option>
-      <option value="/filter?month=04&category={{category}}">四月</option>
-      <option value="/filter?month=05&category={{category}}">五月</option>
-      <option value="/filter?month=06&category={{category}}">六月</option>
-      <option value="/filter?month=07&category={{category}}">七月</option>
-      <option value="/filter?month=08&category={{category}}">八月</option>
-      <option value="/filter?month=09&category={{category}}">九月</option>
-      <option value="/filter?month=10&category={{category}}">十月</option>
-      <option value="/filter?month=11&category={{category}}">十一月</option>
-      <option value="/filter?month=12&category={{category}}">十二月</option>
+      <option value="/filter?month=01&category={{category}}" {{#ifCond month "01"}} selected {{/ifCond}}>
+        一月</option>
+      <option value="/filter?month=02&category={{category}}" {{#ifCond month "02"}} selected {{/ifCond}}>
+        二月</option>
+      <option value="/filter?month=03&category={{category}}" {{#ifCond month "03"}} selected {{/ifCond}}>
+        三月</option>
+      <option value="/filter?month=04&category={{category}}" {{#ifCond month "04"}} selected {{/ifCond}}>
+        四月</option>
+      <option value="/filter?month=05&category={{category}}" {{#ifCond month "05"}} selected {{/ifCond}}>
+        五月</option>
+      <option value="/filter?month=06&category={{category}}" {{#ifCond month "06"}} selected {{/ifCond}}>
+        六月</option>
+      <option value="/filter?month=07&category={{category}}" {{#ifCond month "07"}} selected {{/ifCond}}>
+        七月</option>
+      <option value="/filter?month=08&category={{category}}" {{#ifCond month "08"}} selected {{/ifCond}}>
+        八月</option>
+      <option value="/filter?month=09&category={{category}}" {{#ifCond month "09"}} selected {{/ifCond}}>
+        九月</option>
+      <option value="/filter?month=10&category={{category}}" {{#ifCond month "10"}} selected {{/ifCond}}>
+        十月</option>
+      <option value="/filter?month=11&category={{category}}" {{#ifCond month "11"}} selected {{/ifCond}}>
+        十一月</option>
+      <option value="/filter?month=12&category={{category}}" {{#ifCond month "12"}} selected {{/ifCond}}>
+        十二月</option>
     </select>
-  
-    <select class="mx-auto p-1 float-right" onchange="window.location.href=this.value;" style="display: inline-block; width: 49%;">
+
+    <select class="form-control mx-auto p-1 float-right" onchange="window.location.href=this.value;"
+      style="display: inline-block; width: 49%;">
       <option disabled selected value="/">類別</option>
-      <option value="/filter?month={{month}}&category=domestic">家居物業</option>
-      <option value="/filter?month={{month}}&category=traffic">交通出行</option>
-      <option value="/filter?month={{month}}&category=recreation">休閒娛樂</option>
-      <option value="/filter?month={{month}}&category=diet">餐飲食品</option>
-      <option value="/filter?month={{month}}&category=others">其他</option>
+      <option value="/filter?month={{month}}&category=domestic" {{#ifCond category "domestic"}} selected {{/ifCond}}>
+        家居物業</option>
+      <option value="/filter?month={{month}}&category=traffic" {{#ifCond category "traffic"}} selected {{/ifCond}}>
+        交通出行</option>
+      <option value="/filter?month={{month}}&category=recreation" {{#ifCond category "recreation"}} selected
+        {{/ifCond}}>
+        休閒娛樂</option>
+      <option value="/filter?month={{month}}&category=diet" {{#ifCond category "diet"}} selected {{/ifCond}}>
+        餐飲食品</option>
+      <option value="/filter?month={{month}}&category=others" {{#ifCond category "others"}} selected {{/ifCond}}>
+        其他</option>
     </select>
   </div>
   <h5 class="p-1 w-75 mx-auto">總金額：</h5>
-  <div id="total-amount" class="text-right w-75 mx-auto" style="color: coral; font-size: 70px;">0</div>  
+  <div id="total-amount" class="text-right w-75 mx-auto" style="color: coral; font-size: 70px;">0</div>
 </div>
-<div class="list-group records">
-<table class="table table-striped table-borderless" style="margin-left: 12.5%;">
+<div class="list-group container">
+  <table class="table table-striped table-borderless mx-5">
     <tbody>
       {{#each records}}
       <tr class="record">
-        <td class="align-middle pl-3">
+        <td class="align-middle">
           <div class="category">{{this.category}}</div>
         </td>
         <td class="align-middle">
           <div class="item">
             <h5 class="name">{{this.name}}</h5>
             <small class="date">{{this.date}}</small>
-          </div>
+          </div>            
         </td>
-        <td class="align-middle">
-          <div class="merchant">{{this.merchant}}</div>
-        </td>
-        <td class="align-middle amount pr-2">{{this.amount}}</td>
-        <td class="justify-content-end table-light table-borderless">
-          <a href="/records/{{this.id}}/edit" class="btn btn-link text-dark pt-3">修改</a>
-          <form action="/records/{{this.id}}?_method=DELETE" method="POST" style="display: inline-block;" onsubmit="if(confirm('確定刪除？')) return true; else return false">
+        <td class="align-middle px-5">{{this.merchant}}</td>
+        <td class="align-middle amount px-5">{{this.amount}}</td>
+        <td class="justify-content-end pl-5">
+          <a href="/records/{{this.id}}/edit" class="btn btn-link text-info pt-3">修改</a>
+          <form action="/records/{{this.id}}?_method=DELETE" method="POST" style="display: inline-block;"
+            onsubmit="if(confirm('確定刪除？')) return true; else return false">
             <button type="submit" class="btn btn-link text-danger pt-3">刪除</button>
           </form>
         </td>
@@ -57,7 +75,9 @@
     </tbody>
   </table>
   <div class="w-75 mx-auto">
-    <a href="/" class="btn btn-outline-dark text-white w-25 d-inline-block float-right" style="background-color: coral;">全部顯示</a>
-    <a href="/records/new" class="btn btn-outline-dark text-white w-50 d-inline-block float-right mr-5" style="background-color: coral;">新增支出</a>    
+    <a href="/" class="btn btn-outline-dark text-white w-25 d-inline-block float-right"
+      style="background-color: grey;">顯示所有項目</a>
+    <a href="/records/new" class="btn btn-outline-dark text-white w-50 d-inline-block float-right mr-5"
+      style="background-color: coral;">新增支出</a>
   </div>
 </div>

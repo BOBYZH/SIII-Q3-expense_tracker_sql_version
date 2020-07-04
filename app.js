@@ -12,7 +12,10 @@ const flash = require('connect-flash')
 
 app.use(express.urlencoded({ extended: true }))
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers')
+}))
 app.set('view engine', 'handlebars')
 
 app.use(methodOverride('_method'))

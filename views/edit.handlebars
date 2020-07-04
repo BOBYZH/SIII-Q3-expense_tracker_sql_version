@@ -1,8 +1,14 @@
-<form action="/records/{{{record.id}}}?_method=PUT" method="POST" class="row">
+  {{#if record}}
+  <form action="/records/{{{record.id}}}?_method=PUT" method="POST" class="row">
+  {{else}}
+  <form action="/records" method="POST" class="row">
+  {{/if}}
   <div class="container">
     <div class="w-100 mx-auto row my-3">
       <div class="col-4 " style="font-size: 10px;"p>*</sup>必填欄位</div>
-      <div class="col-8 text-center">請修改你的支出</div>
+      <div class="col-8 text-center">
+        請{{#if record}}修改{{else}}輸入{{/if}}你的支出
+      </div>
     </div>
       
     <div class="w-100 mx-auto p-2 row my-3">
@@ -19,11 +25,11 @@
       <div class="col-4">類別<sup>*</sup>：</div>
       <select class="col-8 form-control border border-dark" name="category" value="{{record.category}}" required>
         <option disabled selected value>請選擇</option>
-        <option value="domestic">家居物業</option>
-        <option value="traffic">交通出行</option>
-        <option value="recreation">休閒娛樂</option>
-        <option value="diet">餐飲食品</option>
-        <option value="others">其他</option>
+        <option value="domestic" {{#ifCond record.category "domestic"}} selected {{/ifCond}}>家居物業</option>
+        <option value="traffic" {{#ifCond record.category "traffic"}} selected {{/ifCond}}>交通出行</option>
+        <option value="recreation" {{#ifCond record.category "recreation"}} selected {{/ifCond}}>休閒娛樂</option>
+        <option value="diet" {{#ifCond record.category "diet"}} selected {{/ifCond}}>餐飲食品</option>
+        <option value="others" {{#ifCond record.category "others"}} selected {{/ifCond}}>其他</option>
       </select>
     </div>
               
@@ -39,7 +45,12 @@
     
     <div class="w-100 mx-auto p-2 row ">
       <div class="col-4"></div>
-      <button type="submit" class="btn btn-outline-dark border-dark col-8">送出</button>
+      <div class="col-8 p-0">
+        <button type="submit" class="btn btn-outline-dark border-dark w-100 my-3">
+          {{#if record}}送出{{else}}新增支出{{/if}}
+        </button>
+        <a href="javascript:history.back()" class="btn btn-outline-dark border-dark w-100 my-3">回上一頁</a>
+      </div>
     </div>
   </div>
 </form> 
