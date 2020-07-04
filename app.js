@@ -22,6 +22,7 @@ app.use(methodOverride('_method'))
 
 app.use(session({
   secret: 'your secret key',
+  cookie: { maxAge: 86400000 }, // 延長到一天， 以免用到一半被登出
   resave: false,
   saveUninitialized: true
 }))
