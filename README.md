@@ -2,7 +2,8 @@
 
 ## Alpha Camp 學期三(2019年版) Final Exam A29: 「專業知識與技術」題目
 ### Q3: 老爸的私房錢 - Sequelize
-- 免安裝預覽連結：[TBA](#)
+- 自使用MongoDB的舊版([連結](https://github.com/BOBYZH/expense_tracker_mongodb_version))修改，並修復既有UI問題
+- 免安裝預覽連結：[https://expense-tracker-sql-prcatce.herokuapp.com/](https://expense-tracker-sql-prcatce.herokuapp.com/)
 
 (因heroku服務免費版限制，開啟網站時需待主機從休眠狀態恢復，須稍待片刻)
 
@@ -61,7 +62,12 @@ npm run start
 - 若使用虛擬主機，則須配合主機服務設定另用網址
 
 ## 主要功能：
-- 同使用MongoDB的第二版，詳見[其readme說明](https://github.com/BOBYZH/expense_tracker_mongodb_version#%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD)
+- 同使用MongoDB的第二版，詳見[readme說明](https://github.com/BOBYZH/expense_tracker_mongodb_version#%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD)
 ### 版本更新：
 #### 第三版
 - 資料庫改採用MySQL
+- UI優化
+  - 下拉選單能顯示目前選項
+  - 首頁表格排版與選單樣式調整
+  - 新增與修改頁面共用模板，並增加"回上一頁"按鈕
+  - 新增年份的篩選選項
