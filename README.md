@@ -24,7 +24,7 @@ cd SIII-Q3-expense_tracker_sql_version
 ```
 npm i nodemon -g
 ```
-4. 使用npm安裝需要的套件，套件列表與版本詳見於[package.json](https://github.com/BOBYZH/not-citiesocial/blob/master/package.json)的"dependencies"：
+4. 使用npm安裝需要的套件，套件列表與版本詳見於[package.json](https://github.com/BOBYZH/SIII-Q3-expense_tracker_sql_version/blob/master/package.json)的"dependencies"：
 ```
 npm i 
 ```
