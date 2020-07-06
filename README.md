@@ -18,7 +18,7 @@ git clone https://github.com/BOBYZH/SIII-Q3-expense_tracker_sql_version.git
 ```
 2. 開啟終端機(terminal)，將目錄切換至專案資料夾(not-citiesocial)：
 ```
-cd not-citiesocial
+cd SIII-Q3-expense_tracker_sql_version
 ```
 3. 確認是否有在全域(global)環境安裝nodemon；沒有的話建議安裝，在終端機輸入：
 ```
